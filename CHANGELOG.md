@@ -8,4 +8,6 @@
 - App: overview; game rooms with the log, YES/NO replies, whose turn it is and the reveal deadline in days, then STANDS /
   PLAINLY FALSE marks with the GEN each paid; an open form that generates the salt and shows the commitment and game id
   before signing; credits with withdraw; a verification page reading `get_limits`.
+- Run through the app on StudioNet (11 transactions, `RUNTIME_EVIDENCE.md`): the reveal listed only the plainly false
+  reply; 0.002 GEN to the misled player, 0.008 GEN to the keeper; both withdrew.
 - Tests: 74 Direct Mode contract tests, 28/28 mutants, frontend tests, calldata table and RPC probe, source hash; CI.

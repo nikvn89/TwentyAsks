@@ -14,6 +14,7 @@ When the game ends the bond becomes credits, and each wallet takes its own credi
 | Contract source | `contracts/HonestKeeper.py` (SHA-256 in `SOURCE_SHA256.txt`) |
 | Project deployment | [`0x04A003704FDFAdE01D79213ab78B8D3c4c6CC0A2`](https://explorer-studio.genlayer.com/address/0x04A003704FDFAdE01D79213ab78B8D3c4c6CC0A2) |
 | Intelligent Contract | HonestKeeper — the same frozen source, deployed separately at [`0x927633E550Ded8140e61FF9A4dD6e91Bc418E79f`](https://explorer-studio.genlayer.com/address/0x927633E550Ded8140e61FF9A4dD6e91Bc418E79f) |
+| Live app | https://twenty-asks.vercel.app |
 | Evidence | `RUNTIME_EVIDENCE.md` (one tx hash per row) · `TESTING.md` |
 
 ## What it does
@@ -32,7 +33,11 @@ positions whose reply is plainly false.
 
 On StudioNet, for `lighthouse`, one log held `Is it usually near water? — YES`, `Is it usually in a desert? — YES` and
 `Is it old? — YES`. The reveal listed only **question 2**: the player who asked about the desert was credited 0.2 GEN of
-a 1 GEN bond, the keeper kept 0.8 GEN, and the arguable "old" was left out.
+a 1 GEN bond, the keeper kept 0.8 GEN, and the arguable "old" was left out. Through this app, with the desert question
+asked third, the reveal listed **question 3** only: 0.002 GEN of a 0.01 GEN bond to the player it misled, 0.008 GEN to
+the keeper.
+
+![Revealed: question 3 PLAINLY FALSE, the others STANDS](docs/evidence/1-revealed-question-3.png)
 
 Unusable or unclear output lists nothing, so an honest keeper is never penalised by a broken reading. A wrong salt cannot
 reveal. Guesses stay hidden until the reveal.

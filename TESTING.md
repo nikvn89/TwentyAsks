@@ -62,8 +62,13 @@ The app generates 32-character salts and shows a byte meter on every text write.
 
 ## On-chain runs
 
-See `RUNTIME_EVIDENCE.md`: the Intelligent Contract run (16 transactions, every must-verify row PASS) and the Project run
-through this app, one hash per row.
+See `RUNTIME_EVIDENCE.md`: the Project run through this app (11 transactions) and the Intelligent Contract run (16
+transactions, every must-verify row PASS), one hash per row.
+
+Project run through the app: one game for `lighthouse` with a true reply, an arguable one and a plainly false one; a
+player's *Ask* was disabled with the contract's sentence while a question waited; the reveal listed **question 3** (the
+desert reply) only, 0.002 GEN went to its asker and 0.008 GEN to the keeper, and both withdrew. Every result was reported
+by the app only after it re-read the accepted state: **PASS**.
 
 Intelligent Contract run: for `lighthouse`, one log held a true reply, a plainly false one and an arguable one; the reveal
 listed **[2]** only, the asker of question 2 was credited 0.2 GEN of a 1 GEN bond and the keeper 0.8 GEN, and both
