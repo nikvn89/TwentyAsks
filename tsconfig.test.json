@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "strict": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["tests/js/**/*.ts", "src/lib/pytext.ts", "src/lib/ids.ts", "src/lib/rules.ts", "src/lib/types.ts",
+              "src/lib/receipt.ts", "src/lib/errors.ts", "src/lib/escape.ts", "src/lib/verify.ts", "src/lib/calldata.ts", "src/lib/parse.ts", "src/lib/gen.ts",
+              "tools/calldata-rows.d.mts"]
+}

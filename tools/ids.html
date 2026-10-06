@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TwentyAsks commitment and game id</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f5f4ef; color: #16171b; max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+  input { width: 100%; font: inherit; padding: 6px 8px; box-sizing: border-box; margin: 4px 0 12px; }
+  code { font-family: ui-monospace, Menlo, monospace; font-size: 0.85em; word-break: break-all; }
+</style>
+</head>
+<body>
+<h1>TwentyAsks commitment and game id</h1>
+<p>Offline helper for GenLayer Studio: computes the commitment for <code>open_game</code> and the game id exactly like the
+contract (Keccak-256, Python whitespace rules, lower-cased secret, salt as typed). Nothing is sent anywhere.</p>
+<label>Keeper wallet<input id="keeper" spellcheck="false"></label>
+<label>Secret item<input id="secret" spellcheck="false"></label>
+<label>Salt (keep it: the reveal needs it exactly)<input id="salt" spellcheck="false"></label>
+<p>Commitment: <code id="commitment"></code></p>
+<p>Game id: <code id="game"></code></p>
+<script id="core">
+// ---- Keccak-256 (Ethereum padding 0x01), BigInt lanes ----
+const RC = [
+  0x0000000000000001n, 0x0000000000008082n, 0x800000000000808an, 0x8000000080008000n,
+  0x000000000000808bn, 0x0000000080000001n, 0x8000000080008081n, 0x8000000000008009n,
+  0x000000000000008an, 0x0000000000000088n, 0x0000000080008009n, 0x000000008000000an,
+  0x000000008000808bn, 0x800000000000008bn, 0x8000000000008089n, 0x8000000000008003n,
+  0x8000000000008002n, 0x8000000000000080n, 0x000000000000800an, 0x800000008000000an,
+  0x8000000080008081n, 0x8000000000008080n, 0x0000000080000001n, 0x8000000080008008n,
+];
+const ROT = [0, 1, 62, 28, 27, 36, 44, 6, 55, 20, 3, 10, 43, 25, 39, 41, 45, 15, 21, 8, 18, 2, 61, 56, 14];
+const M = (1n << 64n) - 1n;
+const rotl = (x, n) => (n === 0 ? x : ((x << BigInt(n)) | (x >> BigInt(64 - n))) & M);
+function keccakF(s) {
+  for (let r = 0; r < 24; r++) {
+    const C = [0, 1, 2, 3, 4].map((x) => s[x] ^ s[x + 5] ^ s[x + 10] ^ s[x + 15] ^ s[x + 20]);
+    for (let x = 0; x < 5; x++) {
+      const D = C[(x + 4) % 5] ^ rotl(C[(x + 1) % 5], 1);
+      for (let y = 0; y < 25; y += 5) s[x + y] ^= D;
+    }
+    const B = new Array(25);
+    for (let x = 0; x < 5; x++) for (let y = 0; y < 5; y++) B[y + 5 * ((2 * x + 3 * y) % 5)] = rotl(s[x + 5 * y], ROT[x + 5 * y]);
+    for (let x = 0; x < 5; x++) for (let y = 0; y < 5; y++) s[x + 5 * y] = B[x + 5 * y] ^ (~B[(x + 1) % 5 + 5 * y] & M & B[(x + 2) % 5 + 5 * y]);
+    s[0] ^= RC[r];
+  }
+}
+function keccak256Hex(bytes) {
+  const rate = 136;
+  const padded = new Uint8Array(Math.ceil((bytes.length + 1) / rate) * rate);
+  padded.set(bytes);
+  padded[bytes.length] ^= 0x01;
+  padded[padded.length - 1] ^= 0x80;
+  const s = new Array(25).fill(0n);
+  for (let off = 0; off < padded.length; off += rate) {
+    for (let i = 0; i < rate / 8; i++) {
+      let lane = 0n;
+      for (let b = 7; b >= 0; b--) lane = (lane << 8n) | BigInt(padded[off + i * 8 + b]);
+      s[i] ^= lane;
+    }
+    keccakF(s);
+  }
+  let hex = "";
+  for (let i = 0; i < 4; i++) for (let b = 0; b < 8; b++) hex += Number((s[i] >> BigInt(8 * b)) & 0xffn).toString(16).padStart(2, "0");
+  return hex;
+}
+// ---- Python str.strip() / split() / len() ----
+const WS = new Set([0x09,0x0a,0x0b,0x0c,0x0d,0x1c,0x1d,0x1e,0x1f,0x20,0x85,0xa0,0x1680,0x2000,0x2001,0x2002,0x2003,0x2004,0x2005,0x2006,0x2007,0x2008,0x2009,0x200a,0x2028,0x2029,0x202f,0x205f,0x3000]);
+const isWs = (c) => WS.has(c.codePointAt(0));
+function pyNormalize(t) { const out = []; let cur = ""; for (const c of Array.from(t)) { if (isWs(c)) { if (cur) out.push(cur); cur = ""; } else cur += c; } if (cur) out.push(cur); return out.join(" "); }
+const utf8 = (s) => new TextEncoder().encode(s);
+function commitmentOf(secret, salt) { return keccak256Hex(utf8("TWENTY_ASKS:SECRET:V1|" + pyNormalize(secret).toLowerCase() + "|" + salt)); }
+function gameIdOf(keeper, commitment) { return keccak256Hex(utf8("TWENTY_ASKS:GAME:V1|" + keeper.trim().toLowerCase() + "|" + commitment.trim().toLowerCase())); }
+</script>
+<script>
+const $ = (id) => document.getElementById(id);
+const ok = (w) => /^0x[0-9a-f]{40}$/.test(w.trim().toLowerCase());
+function render() {
+  const k = $("keeper").value, s = $("secret").value, salt = $("salt").value;
+  const c = pyNormalize(s) ? commitmentOf(s, salt) : "";
+  $("commitment").textContent = c;
+  $("game").textContent = c && ok(k) ? gameIdOf(k, c) : "";
+}
+for (const id of ["keeper", "secret", "salt"]) $(id).addEventListener("input", render);
+</script>
+</body>
+</html>

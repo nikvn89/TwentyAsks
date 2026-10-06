@@ -1,0 +1,146 @@
+{
+ "total": 28,
+ "caught": 28,
+ "results": [
+  {
+   "name": "a listed lie pays the keeper instead of the misled asker",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_tooth_same_log_only_the_plain_lie_pays"
+  },
+  {
+   "name": "lie share uses the wrong divisor (bond // 6)",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_tooth_same_log_only_the_plain_lie_pays"
+  },
+  {
+   "name": "six positions paid instead of five (cap off by one)",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_at_most_five_positions_are_paid"
+  },
+  {
+   "name": "keeper gets the whole bond back despite the payouts",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_tooth_same_log_only_the_plain_lie_pays"
+  },
+  {
+   "name": "fail-safe flipped on unparseable output (every reply listed)",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_fail_safe_on_unparseable_output"
+  },
+  {
+   "name": "an out-of-range position is skipped instead of voiding the list",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_fail_safe_on_an_out_of_range_position"
+  },
+  {
+   "name": "a non-number element is skipped instead of voiding the list",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_fail_safe_on_an_element_that_is_not_a_whole_number"
+  },
+  {
+   "name": "validator accepts any well-formed list",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_validator_accepts_agreement_and_rejects_everything_else"
+  },
+  {
+   "name": "anyone may answer",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_third_wallet_is_refused_by_every_keeper_or_player_write"
+  },
+  {
+   "name": "anyone may reveal",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_third_wallet_is_refused_by_every_keeper_or_player_write"
+  },
+  {
+   "name": "anyone may forfeit",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_third_wallet_is_refused_by_every_keeper_or_player_write"
+  },
+  {
+   "name": "forfeit deadline off by one (four days)",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_forfeit_splits_the_bond_among_everyone_who_asked"
+  },
+  {
+   "name": "forfeit remainder lost",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_forfeit_splits_the_bond_among_everyone_who_asked"
+  },
+  {
+   "name": "a second question may be asked while one is pending",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_runtime_table_in_order - Ass..."
+  },
+  {
+   "name": "reveal allowed while a question is pending",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_revert_answer_before_revealing"
+  },
+  {
+   "name": "question cap off by one (21 questions)",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_revert_all_twenty_asked - As..."
+  },
+  {
+   "name": "question length cap off by one",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_one_model_call_for_a_full_log_of_twenty"
+  },
+  {
+   "name": "minimum bond off by one",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_revert_bond_out_of_range - g..."
+  },
+  {
+   "name": "reserved token not checked on questions",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_revert_reserved_token - Asse..."
+  },
+  {
+   "name": "fence strip: no gap and a single pass (cross-token rebuild survives)",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_fence_strip_is_fixed_point"
+  },
+  {
+   "name": "wallet leaks into the prompt",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_prompt_never_sees_wallets_state_money_guesses_or_salt"
+  },
+  {
+   "name": "commitment skips whitespace normalization",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_commitment_normalizes_secret_whitespace_and_case"
+  },
+  {
+   "name": "state checked after caller in answer",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_check_order_answer_and_guess"
+  },
+  {
+   "name": "the latest correct guess wins instead of the earliest",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_winner_is_the_earliest_correct_guess"
+  },
+  {
+   "name": "guesses shown before the reveal",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_winner_is_the_earliest_correct_guess"
+  },
+  {
+   "name": "withdraw does not zero the credit",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_withdraw_pays_the_credit_once"
+  },
+  {
+   "name": "one wallet may guess twice",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_revert_already_guessed - Ass..."
+  },
+  {
+   "name": "day arithmetic treats February as part of the year",
+   "status": "CAUGHT",
+   "first_failure": "FAILED tests/contract/test_honestkeeper.py::test_today_matches_calendar_arithmetic"
+  }
+ ]
+}

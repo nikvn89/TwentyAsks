@@ -1,0 +1,8 @@
+{
+  "network": "GenLayer StudioNet",
+  "chain_id": 61999,
+  "contract_file": "contracts/HonestKeeper.py",
+  "source_sha256": "3d305aa934825304c32905452d806c9ba22cbb8d470e3fed491ff25afae009ea",
+  "intelligent_contract": "0x927633E550Ded8140e61FF9A4dD6e91Bc418E79f",
+  "project": "0x04A003704FDFAdE01D79213ab78B8D3c4c6CC0A2"
+}

@@ -1,0 +1,61 @@
+{
+  "keeper": "0x6276095FAEA15108740445ff277fdA8c304657F4",
+  "games": [
+    {
+      "secret": "lighthouse",
+      "salt": "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Ja",
+      "normalized_lower": "lighthouse",
+      "commitment": "276c67646c7e64be52612329b188da32c42bc1cb5ea2d5772866279f028fba41",
+      "game_id": "33dc9b684fbc4397db21dc1d1d3fd3f44579905554ebfcbc443d9163b60ea590"
+    },
+    {
+      "secret": "Lighthouse",
+      "salt": "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Ja",
+      "normalized_lower": "lighthouse",
+      "commitment": "276c67646c7e64be52612329b188da32c42bc1cb5ea2d5772866279f028fba41",
+      "game_id": "33dc9b684fbc4397db21dc1d1d3fd3f44579905554ebfcbc443d9163b60ea590"
+    },
+    {
+      "secret": "  light   house  ",
+      "salt": "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Ja",
+      "normalized_lower": "light house",
+      "commitment": "93f44e7637a2670903d05df2ea4f80ac9dee8e19c54e838b91578a28e414fcad",
+      "game_id": "a1a5f502b6063a8014ed8cb4990cf1409e7a09a7e6273845f4b7d6485aa2e97f"
+    },
+    {
+      "secret": "\u001cvolcano\u001f",
+      "salt": "s",
+      "normalized_lower": "volcano",
+      "commitment": "2199ebd38f307cf633d499c93c76ecf1d21b9d0e2b98f566687bd08a9e933a8e",
+      "game_id": "4982cd8b85efd035db523f2bed6acb61dae3d027ebcdaacaa85d393eb77a1fac"
+    },
+    {
+      "secret": "teapot　cup",
+      "salt": "salt with spaces ",
+      "normalized_lower": "tea pot cup",
+      "commitment": "ff23658b42cb6bd96db65bcddbb60a6609ce73e13309464660e46fb67d424f40",
+      "game_id": "d2f25f64b7d760da5a4b4332d63ade4b96b31074a5f2e7783e86ce1d7563f149"
+    },
+    {
+      "secret": "﻿candle",
+      "salt": "x",
+      "normalized_lower": "﻿candle",
+      "commitment": "37b728328c576b41525f506be93021e9a25c4edf32ebf553764c2382d9ff363d",
+      "game_id": "11d1a5636cc3fb0a7097ee93fe5eaf46d258dd75f4f6669b48be1e9c67209199"
+    },
+    {
+      "secret": "Crème brûlée 🍮",
+      "salt": "ÄÖÜ-salt",
+      "normalized_lower": "crème brûlée 🍮",
+      "commitment": "8623ae13fdfebf7a42895960840e5a24103384dec2162b38b7d83b32cce6e470",
+      "game_id": "20f0c2613849ec3ea0ea560e957aab7e4a652a4a8a8ed31d6131f705b53c5856"
+    },
+    {
+      "secret": "penguin",
+      "salt": "",
+      "normalized_lower": "penguin",
+      "commitment": "1ba358bed2ad8b0211667dd0aa7e34345dc078f5c1c9135e3e9ba696d9601232",
+      "game_id": "6b7d2f2565db2db55619a51d1282b5a6c27c6d1b8786ecdd3f5560f262dde7cc"
+    }
+  ]
+}

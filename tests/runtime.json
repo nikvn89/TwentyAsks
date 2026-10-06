@@ -1,0 +1,232 @@
+{
+ "contract": "HonestKeeper",
+ "wallets": {
+  "A": "keeper",
+  "B": "player 1",
+  "C": "player 2"
+ },
+ "methods": {
+  "open_game": [
+   "commitment_hex"
+  ],
+  "ask": [
+   "game_id",
+   "question"
+  ],
+  "answer": [
+   "game_id",
+   "yes"
+  ],
+  "guess": [
+   "game_id",
+   "word"
+  ],
+  "reveal": [
+   "game_id",
+   "secret",
+   "salt"
+  ],
+  "forfeit": [
+   "game_id"
+  ],
+  "withdraw": [],
+  "get_game": [
+   "game_id"
+  ],
+  "get_credits": [
+   "wallet"
+  ]
+ },
+ "rows": [
+  {
+   "n": 1,
+   "wallet": "A",
+   "method": "open_game",
+   "args": [
+    "276c67646c7e64be52612329b188da32c42bc1cb5ea2d5772866279f028fba41"
+   ],
+   "value": 5000000000000000,
+   "save": {
+    "name": "G",
+    "payload": [
+     "L:TWENTY_ASKS:GAME:V1|",
+     "sender",
+     "L:|",
+     "lower(A0)"
+    ]
+   },
+   "expect": "G is ASKING with bond_wei 5000000000000000; get_game(G) shows today = opened_day (days since 1970) and reveal_deadline_day = opened_day + 3"
+  },
+  {
+   "n": 2,
+   "calls": [
+    {
+     "wallet": "B",
+     "method": "ask",
+     "args": [
+      "$G",
+      "Is it usually near water?"
+     ]
+    },
+    {
+     "wallet": "A",
+     "method": "answer",
+     "args": [
+      "$G",
+      true
+     ]
+    }
+   ],
+   "expect": "question 1 answered YES (2 tx)"
+  },
+  {
+   "n": 3,
+   "calls": [
+    {
+     "wallet": "C",
+     "method": "ask",
+     "args": [
+      "$G",
+      "Is it usually in a desert?"
+     ]
+    },
+    {
+     "wallet": "A",
+     "method": "answer",
+     "args": [
+      "$G",
+      true
+     ]
+    }
+   ],
+   "expect": "question 2 answered YES — a deliberately false reply (2 tx)"
+  },
+  {
+   "n": 4,
+   "wallet": "B",
+   "method": "ask",
+   "args": [
+    "$G",
+    "Is it old?"
+   ],
+   "expect": "question 3 is pending"
+  },
+  {
+   "n": 5,
+   "wallet": "C",
+   "method": "ask",
+   "args": [
+    "$G",
+    "Does it have a lamp at the top?"
+   ],
+   "revert": "Wait for the keeper to answer the last question",
+   "expect": "revert *Wait for the keeper to answer the last question*"
+  },
+  {
+   "n": 6,
+   "wallet": "A",
+   "method": "answer",
+   "args": [
+    "$G",
+    true
+   ],
+   "expect": "question 3 answered YES (an arguable question)"
+  },
+  {
+   "n": 7,
+   "wallet": "B",
+   "method": "guess",
+   "args": [
+    "$G",
+    "lighthouse"
+   ],
+   "expect": "guess recorded; get_game shows guess_count 1 and no guess text yet"
+  },
+  {
+   "n": 8,
+   "wallet": "A",
+   "method": "reveal",
+   "args": [
+    "$G",
+    "lighthouse",
+    "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Jb"
+   ],
+   "revert": "The revealed secret does not match the commitment",
+   "expect": "revert *The revealed secret does not match the commitment* (wrong salt)"
+  },
+  {
+   "n": 9,
+   "wallet": "A",
+   "method": "reveal",
+   "args": [
+    "$G",
+    "lighthouse",
+    "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Ja"
+   ],
+   "expect": "REVEALED; lies == [2], winner = B; credits C = 0.001 GEN, A = 0.004 GEN"
+  },
+  {
+   "n": 10,
+   "calls": [
+    {
+     "wallet": "C",
+     "method": "withdraw",
+     "args": []
+    },
+    {
+     "wallet": "A",
+     "method": "withdraw",
+     "args": []
+    }
+   ],
+   "expect": "GEN reaches C (+0.001) and A (+0.004); both credits back to 0 (2 tx)"
+  },
+  {
+   "n": 11,
+   "wallet": "B",
+   "method": "ask",
+   "args": [
+    "$G",
+    "Is it a building?"
+   ],
+   "revert": "This game is over",
+   "expect": "revert *This game is over*"
+  },
+  {
+   "n": 12,
+   "kind": "view",
+   "method": "get_game",
+   "args": [
+    "$G"
+   ],
+   "expect": "read: REVEALED, secret lighthouse, lies [2], question 2 paid 0.001 GEN, winner B, B's guess now shown"
+  }
+ ],
+ "caps": [
+  {
+   "label": "a question at the 100-character cap",
+   "method": "ask",
+   "args": [
+    "$G",
+    "x*100"
+   ]
+  },
+  {
+   "label": "a guess at the 40-character cap",
+   "method": "guess",
+   "args": [
+    "$G",
+    "x*40"
+   ]
+  },
+  {
+   "label": "a secret at the 40-character cap with a 32-character salt",
+   "method": "reveal",
+   "args": [
+    "$G",
+    "x*40",
+    "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Ja"
+   ]
+  }
+ ]
+}
