@@ -1,0 +1,222 @@
+{
+  "recorded_at": "2026-10-17T15:17:30.105Z",
+  "contract": "0x5BC1C92F9895e05c443163545c284770Da7015a6",
+  "game_id": "5fbfc88717e84afab07025ab5affa3456a289ba0594c3397366bec821819618c",
+  "read_status_requested": "finalized",
+  "limits": {
+    "contract_name": "HonestKeeper",
+    "version": "2.0.0",
+    "max_questions": 20,
+    "min_bond_wei": "1000000000000000",
+    "max_bond_wei": "1000000000000000000",
+    "lie_share_divisor": 5,
+    "join_seconds": 86400,
+    "play_seconds": 3600,
+    "reveal_seconds": 259200,
+    "audit_seconds": 86400,
+    "max_audit_attempts": 3,
+    "unresolved_player_share": "floor(bond/2)",
+    "guess_privacy": "public transaction calldata",
+    "global_admin": false,
+    "automatic_failed_payment_recovery": false,
+    "rubric_hash": "269fefd1489365d1e26c927191e3e8ce39b1c2fff3dbde43fdf7910d979992ca"
+  },
+  "game": {
+    "game_id": "5fbfc88717e84afab07025ab5affa3456a289ba0594c3397366bec821819618c",
+    "keeper": "0x6276095faea15108740445ff277fda8c304657f4",
+    "player": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+    "commitment": "d89d5bf221ec66bbe2dd203acdd499bfc1d48eea7dec68818156ce2eee801011",
+    "bond_wei": "10000000000000000",
+    "state": "REVEALED",
+    "q_count": 3,
+    "questions_left": 17,
+    "pending": false,
+    "opened_at": 1792244653,
+    "join_deadline": 1792331053,
+    "play_deadline": 1792248380,
+    "reveal_deadline": 1792503980,
+    "audit_deadline": 1792335226,
+    "now": 1792250259,
+    "today": 20743,
+    "opened_day": 20743,
+    "reveal_deadline_day": 20746,
+    "deadline_passed": false,
+    "audit_attempts": 1,
+    "audits": [
+      {
+        "status": "VALID",
+        "lies": [
+          1
+        ]
+      }
+    ],
+    "secret": "a kettle",
+    "lies": [
+      1
+    ],
+    "lie_share_wei": "2000000000000000",
+    "keeper_credit_wei": "8000000000000000",
+    "player_credit_wei": "2000000000000000",
+    "winner": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+    "guess_count": 1,
+    "guesses": [
+      {
+        "index": 1,
+        "wallet": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+        "word": "a kettle",
+        "correct": true
+      }
+    ],
+    "questions": [
+      {
+        "index": 1,
+        "asker": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+        "text": "Is it used to boil water?",
+        "answer": "NO",
+        "lie": true,
+        "paid_wei": "2000000000000000"
+      },
+      {
+        "index": 2,
+        "asker": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+        "text": "Is it a living animal?",
+        "answer": "NO",
+        "lie": false,
+        "paid_wei": "0"
+      },
+      {
+        "index": 3,
+        "asker": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+        "text": "Is it beautiful?",
+        "answer": "YES",
+        "lie": false,
+        "paid_wei": "0"
+      }
+    ]
+  },
+  "keeper_credits": {
+    "wallet": "0x6276095faea15108740445ff277fda8c304657f4",
+    "credit_wei": "0",
+    "pending_sequence": 0,
+    "last_withdrawal": {
+      "wallet": "0x6276095faea15108740445ff277fda8c304657f4",
+      "sequence": 1,
+      "amount_wei": "8000000000000000",
+      "status": "RECIPIENT_ACKNOWLEDGED",
+      "requested_at": 1792249616,
+      "replacement_funder": ""
+    }
+  },
+  "player_credits": {
+    "wallet": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+    "credit_wei": "0",
+    "pending_sequence": 0,
+    "last_withdrawal": {
+      "wallet": "0x037f58e33c1ec8fda272361e0aac1e31054a1cde",
+      "sequence": 1,
+      "amount_wei": "2000000000000000",
+      "status": "RECIPIENT_ACKNOWLEDGED",
+      "requested_at": 1792249295,
+      "replacement_funder": ""
+    }
+  },
+  "transactions": [
+    {
+      "hash": "0x57aa33812ab22d9d275a553bf0172175997eb87cec429f43d1af3b1250bae0f9",
+      "status": "FINALIZED",
+      "type": 2,
+      "from_address": "0x037f58E33c1Ec8fdA272361E0aAC1e31054a1CDE",
+      "to_address": "0x5BC1C92F9895e05c443163545c284770Da7015a6",
+      "value": 0,
+      "value_credited": false,
+      "created_at": "2026-10-17T15:01:35.140196+00:00",
+      "nonce": 142,
+      "triggered_by": null,
+      "triggered_on": null,
+      "triggered_transactions": [
+        "0x3e5907728bb5767a8ae230cae4f983ee38da9df30ddc401081ff805268114a6d"
+      ],
+      "result_name": "MAJORITY_AGREE",
+      "execution_result": "SUCCESS",
+      "return_tag": 0,
+      "eq_outputs": {}
+    },
+    {
+      "hash": "0x159e9821d9ea536a2c0439ae5abdc185114329d76a41c66dcbb558ce6595fb2f",
+      "status": "FINALIZED",
+      "type": 2,
+      "from_address": "0x6276095FAEA15108740445ff277fdA8c304657F4",
+      "to_address": "0x5BC1C92F9895e05c443163545c284770Da7015a6",
+      "value": 0,
+      "value_credited": false,
+      "created_at": "2026-10-17T15:06:56.025330+00:00",
+      "nonce": 831,
+      "triggered_by": null,
+      "triggered_on": null,
+      "triggered_transactions": [
+        "0x7c28c680df82a3b31b9a04010dd299cd79510770960e702b406f2f242a305180"
+      ],
+      "result_name": "MAJORITY_AGREE",
+      "execution_result": "SUCCESS",
+      "return_tag": 0,
+      "eq_outputs": {}
+    },
+    {
+      "hash": "0x3e5907728bb5767a8ae230cae4f983ee38da9df30ddc401081ff805268114a6d",
+      "status": "FINALIZED",
+      "type": 0,
+      "from_address": "0x5BC1C92F9895e05c443163545c284770Da7015a6",
+      "to_address": "0x037f58E33c1Ec8fdA272361E0aAC1e31054a1CDE",
+      "value": 2000000000000000,
+      "value_credited": true,
+      "created_at": "2026-10-17T15:02:12.434199+00:00",
+      "nonce": 0,
+      "triggered_by": "0x57aa33812ab22d9d275a553bf0172175997eb87cec429f43d1af3b1250bae0f9",
+      "triggered_on": "finalized",
+      "triggered_transactions": [],
+      "result_name": "NO_MAJORITY"
+    },
+    {
+      "hash": "0x7c28c680df82a3b31b9a04010dd299cd79510770960e702b406f2f242a305180",
+      "status": "FINALIZED",
+      "type": 0,
+      "from_address": "0x5BC1C92F9895e05c443163545c284770Da7015a6",
+      "to_address": "0x6276095FAEA15108740445ff277fdA8c304657F4",
+      "value": 8000000000000000,
+      "value_credited": true,
+      "created_at": "2026-10-17T15:07:29.861852+00:00",
+      "nonce": 1,
+      "triggered_by": "0x159e9821d9ea536a2c0439ae5abdc185114329d76a41c66dcbb558ce6595fb2f",
+      "triggered_on": "finalized",
+      "triggered_transactions": [],
+      "result_name": "NO_MAJORITY"
+    }
+  ],
+  "keeper_balance": {
+    "jsonrpc": "2.0",
+    "result": "0x36c1ad085de6900000",
+    "id": 1
+  },
+  "player_balance": {
+    "jsonrpc": "2.0",
+    "result": "0x18485c5abbbd61388",
+    "id": 1
+  },
+  "contract_balance": {
+    "jsonrpc": "2.0",
+    "result": "0x0",
+    "id": 1
+  },
+  "source_commit_checked": "5e340b19c672221ca55ee2299c729d4259bea1a2",
+  "canonical_source_sha256": "06189c50d9adb5c15692389b3da8e8dac08b23665fa160578e1deae795faa22a",
+  "deployed_raw_sha256": "5098d899d2198bf94cb457318750dec21b552928bf5deb1bf142ab4e6bb40074",
+  "source_normalization": "LF and one terminal newline",
+  "limitations": [
+    "Sequential latest/finalized-requested reads are not a single-block snapshot.",
+    "Correct-network pre-withdrawal balance snapshots were not collected; no isolated balance-delta claim is made.",
+    "Send transactions expose result_name NO_MAJORITY despite no validator round; delivery evidence is FINALIZED + value_credited + matching recipient/value/parent, not a semantic vote.",
+    "RECIPIENT_ACKNOWLEDGED is a recipient attestation, not protocol delivery proof.",
+    "Main-flow audit/deploy/open transaction hashes were not supplied in full; the final game readback confirms the stored result, but does not independently recover those transaction votes.",
+    "Failed native transfer recovery and listed unrun live scenarios remain open."
+  ]
+}
