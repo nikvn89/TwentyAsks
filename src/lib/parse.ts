@@ -18,13 +18,13 @@ const digits = (v: unknown) => typeof v === "string" && /^\d+$/.test(v);
 export function parseGame(raw: string): Game | null {
   const o = parseObject(raw);
   if (!o || typeof o.game_id !== "string" || !Array.isArray(o.questions) || !Array.isArray(o.guesses) ||
-      typeof o.q_count !== "number" || !digits(o.bond_wei) || typeof o.today !== "number") return null;
+      typeof o.player !== "string" || typeof o.now !== "number" || typeof o.play_deadline !== "number" || typeof o.q_count !== "number" || !digits(o.bond_wei) || typeof o.today !== "number") return null;
   return o as unknown as Game;
 }
 
 export function parseCredits(raw: string): Credits | null {
   const o = parseObject(raw);
-  if (!o || typeof o.wallet !== "string" || !digits(o.credit_wei)) return null;
+  if (!o || typeof o.wallet !== "string" || !digits(o.credit_wei) || typeof o.pending_sequence !== "number") return null;
   return o as unknown as Credits;
 }
 

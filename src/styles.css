@@ -261,3 +261,8 @@ textarea { resize: vertical; min-height: 84px; }
 @media (max-width: 480px) {
   .board { grid-template-columns: 1fr; }
 }
+
+/* Audit records and long public addresses must fit narrow screens. */
+.reply pre { max-width: 100%; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.room .mono, .form .mono { overflow-wrap: anywhere; }
+.reply input[type="checkbox"] { width: auto; min-width: 0; margin-right: 8px; }

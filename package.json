@@ -1,7 +1,7 @@
 {
   "name": "twentyasks",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,8 @@
     "test:contract": "python3 -m pytest tests/contract -q -p no:cacheprovider",
     "verify:source": "node tools/verify-source.mjs",
     "calldata": "node tools/calldata-bytes.mjs",
-    "probe:calldata": "node tools/probe-calldata.mjs"
+    "probe:calldata": "node tools/probe-calldata.mjs",
+    "evidence": "node tools/collect-evidence.mjs"
   },
   "dependencies": {
     "genlayer-js": "1.1.8",

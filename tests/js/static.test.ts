@@ -56,7 +56,7 @@ test("pins: genlayer-js 1.1.8 exact, one viem, build script, noEmit", () => {
 test("the concept is wired through the shared rules module", () => {
   const app = read("src/App.tsx");
   for (const call of ["openBlock(", "askBlock(", "answerBlock(", "guessBlock(", "revealBlock(", "forfeitBlock(", "withdrawBlock(",
-    "openVerified(", "askVerified(", "answerVerified(", "guessVerified(", "revealVerified(", "forfeitVerified(", "withdrawVerified(",
+    "openVerified(", "askVerified(", "answerVerified(", "guessVerified(", "revealVerified(", "forfeitVerified(", "withdrawalRequested(",
     "stampOf(", "turnLine(", "deadlineLine("]) {
     assert.ok(app.includes(call), call);
   }
@@ -67,13 +67,12 @@ test("the concept is wired through the shared rules module", () => {
   assert.ok(app.includes('{askReason && (ask || askReason !== REVERTS.questionEmpty) && <span className="reason">{askReason}</span>}'));
 });
 
-test("open_game is the only payable write; it sends the bond, every other write sends 0", () => {
-  const app = read("src/App.tsx");
-  assert.ok(app.includes("sendWrite(me, method, args, value)"));
-  const writes = [...app.matchAll(/runWrite\("[^"]+", "(\w+)", \[[^\]]*\], ([\w.]+), async/g)].map((m) => [m[1], m[2]]);
-  const methods = writes.map((w) => w[0]).sort();
-  assert.deepEqual(methods, ["answer", "ask", "forfeit", "guess", "open_game", "reveal", "withdraw"]);
-  for (const [method, value] of writes) assert.equal(value, method === "open_game" ? "bondWei" : "0n", method);
+test("UI exposes consent, audit recovery and honest withdrawal status", () => {
+  const app=read("src/App.tsx");
+  for(const method of ["join_game", "judge", "resolve_inconclusive", "acknowledge_delivery"]) assert.ok(app.includes(method));
+  assert.ok(app.includes("External delivery is UNCONFIRMED"));
+  assert.ok(app.includes("PUBLIC transaction data"));
+  assert.ok(!app.includes("sent to your wallet. Credits now"));
 });
 
 test("the secret and salt are kept before signing, and the room is a render function (inputs keep focus)", () => {

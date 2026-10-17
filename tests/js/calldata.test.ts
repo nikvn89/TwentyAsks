@@ -12,7 +12,7 @@ test("every case question + every other write at its cap stays under 255 bytes",
   }
 });
 
-test("a 100-character question fits (191 bytes); the salt is the only way past the cliff", () => {
+test("a 100-character question fits (191 bytes); long salts cross the conservative limit", () => {
   assert.equal(calldataBytes("ask", [ID, "x".repeat(100)]), 191);
   assert.ok(calldataBytes("reveal", [ID, "s".repeat(40), "x".repeat(119)]) <= CALLDATA_LIMIT);
   assert.ok(calldataBytes("reveal", [ID, "s".repeat(40), "x".repeat(120)]) > CALLDATA_LIMIT);

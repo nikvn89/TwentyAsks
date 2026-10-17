@@ -21,16 +21,20 @@ export const CASES = {
 export function hardBlockRows() {
   const rows = Object.entries(CASES).map(([name, text]) => ({ name: `ask ${name}`, method: "ask", args: [ID, text] }));
   rows.push({ name: "ask (100-character question, the contract cap)", method: "ask", args: [ID, "q".repeat(100)] });
-  rows.push({ name: "open_game (commitment)", method: "open_game", args: [ID] });
+  rows.push({ name: "open_game (commitment)", method: "open_game", args: [ID, WALLET] });
   rows.push({ name: "answer (id, true)", method: "answer", args: [ID, true] });
   rows.push({ name: "guess (40-character guess, the cap)", method: "guess", args: [ID, "g".repeat(40)] });
   rows.push({ name: "reveal (40-character secret + 32-character salt)", method: "reveal", args: [ID, "s".repeat(40), SALT] });
   rows.push({ name: "forfeit (id)", method: "forfeit", args: [ID] });
   rows.push({ name: "withdraw ()", method: "withdraw", args: [] });
+  for (const method of ["join_game", "cancel_unjoined", "judge", "resolve_inconclusive"])
+    rows.push({name: method, method, args:[ID]});
+  rows.push({name:"acknowledge_delivery", method:"acknowledge_delivery", args:[1]});
+  rows.push({name:"fund_replacement", method:"fund_replacement", args:[WALLET,1]});
   return rows;
 }
 
-/** MEASURE ONLY: the salt has no cap in the contract; a long salt is the one way past the cliff. */
+/** MEASURE ONLY: the salt has no cap in the contract; long salts and multibyte text may cross the limit. */
 export function measureOnlyRows() {
   return [{ name: "reveal with a 40-character secret and a 128-character salt", method: "reveal", args: [ID, "s".repeat(40), "x".repeat(128)] }];
 }

@@ -1,52 +1,66 @@
-# SECURITY
+# Security boundaries
 
-## The contract holds GEN
+## AI audit
 
-It holds the bond of every game still `ASKING` and every wallet's credits not yet withdrawn. `reveal` and `forfeit`
-only write credits; GEN leaves the contract only through `withdraw()`, which sets the caller's credit to zero before
-sending it and never calls the model. `open_game` is the only payable write; the app sends value 0 with every other one.
+The model receives only a fenced secret and numbered question/answer log. It never
+selects wallets, money, deadlines or state transitions. Leader and validator independently
+produce a strict {status,lies} object and compare the canonical result. A valid empty
+list differs from INCONCLUSIVE. Unknown fields, booleans/string positions, out-of-range
+indices and malformed JSON cannot masquerade as a clean audit.
 
-## Where the central rule lives
+Delimiters reduce accidental instruction confusion; they do not guarantee prompt-injection
+resistance. Independent models may agree on an incorrect result. Local mocked tests do
+not establish real-model accuracy. Ambiguous/instruction-like secrets and prompt injection
+must also be exercised on the deployed version. Valid disagreement rejects the leader
+proposal; it is not converted into an accepted clean result.
 
-Whether a reply is plainly false is decided only by validators inside `reveal`, over the whole log at once. What follows
-is deterministic in the contract: each listed position pays `bond // 5` to its asker (the lowest five), the keeper gets
-the rest. The app never decides a reply and never screens question text for meaning: it reads `lies`, each question's
-`lie` and `paid_wei`, and `keeper_credit_wei` back from `get_game` (checked by `tests/js/verify.test.ts`).
+## Economic trade-offs
 
-## Fail-safe
+One invited player must consent before the game starts. This removes wallet-count
+weighting, but provides no proof of identity or resistance to keeper/player collusion.
+The one-hour participation window is an exact elapsed-time boundary. No question/guess
+can be added after it, avoiding a race that lets a player continually obstruct reveal.
+A pending answer can be completed until the 72-hour reveal deadline; ignoring it risks
+forfeiting the whole bond. An unjoined invitation can be cancelled after 24 hours.
 
-Unusable output lists nothing: an honest keeper is never penalised by a broken reading.
+The unresolved 50/50 policy bounds locked funds and avoids falsely exonerating the
+keeper. It is a compromise with incentive costs: an attacker may try to force an
+inconclusive audit; an honest keeper can lose half the bond, and a dishonest keeper
+might recover half. Both participants accept this explicitly. It is not an ideal fair
+escrow or a proof that the answers were correct. No admin can change the allocations.
 
-## Commitment
+## Public data
 
-The keeper commits to `keccak256(secret, salt)` before the first question and cannot reveal any other item. The salt is
-generated in the browser from `crypto.getRandomValues` and kept in local storage for the keeper before the transaction
-is signed; it never goes on chain until the reveal. A keeper who loses the salt cannot reveal, and after three days the
-players may forfeit the game.
+Guess calldata is public before reveal. UI omission is not encryption or commit/reveal.
+The secret commitment uses Keccak256 and a secret random salt; weak salts permit guessing.
+The frontend stores the reveal secret/salt in local storage, which is accessible to that
+browser profile. Do not use a shared browser for valuable secrets.
 
-## Prompt fence
+## Withdrawals: remaining platform limitation
 
-The secret and the log sit inside `<UNTRUSTED_SECRET>` and `<UNTRUSTED_LOG>` tags. The four tags and `"LIES":` are
-refused in any letter case on input and stripped to a fixed point inside the prompt. The model sees no wallet, bond,
-guess, salt or state.
+Studio simulates consensus and currently supports EOA value transfers, not arbitrary
+EVM contract interactions. A Solidity escrow therefore is not a working Studio fix:
+https://docs.genlayer.com/developers/intelligent-contracts/features/messages
+https://docs.genlayer.com/developers/intelligent-contracts/features/value-transfers
 
-## Grinding
+withdraw reserves all currently available credit, records recipient/amount/sequence/time,
+and emits exactly one external transfer. Pending records block blind replays. Later credits
+are retained while the earlier transfer is pending. The record is not marked paid merely
+because the parent was accepted/finalized. A parent receipt alone is insufficient evidence.
 
-One reading per game: a revealed game cannot be revealed again. One guess per wallet. A question cannot be asked while
-the last one waits for its reply, and there are at most twenty.
+acknowledge_delivery is an owner-signed attestation after independently checking receipt.
+It is not protocol verification; a premature or dishonest acknowledgement cannot recover
+money. It clears the pending slot and retains history. There is no automatic failed-transfer
+proof, trustless refund, or retry endpoint. A timeout must never restore an unfunded credit,
+which could spend another game's bond or cause double delivery.
 
-## Frontend
+fund_replacement(wallet, sequence) is optional, explicit sponsor-funded compensation.
+It requires EXACTLY the recorded amount in new value, credits the intended recipient once,
+and marks the original REPLACEMENT_FUNDED_ORIGINAL_UNRESOLVED. The original transfer may
+still arrive later, in addition to the replacement. A sponsor knowingly bears that cost;
+this is not recovery of the original funds and is not proof of failure. Do not use this
+method to claim the steward's failed-payment-recovery requirement is fully satisfied.
 
-- No MetaMask Snap: the app switches the network with `wallet_switchEthereumChain` / `wallet_addEthereumChain`.
-- One same-origin RPC proxy (`/genlayer-rpc`, in `vite.config.ts` and `vercel.json`) for reads, receipts and writes.
-- A write is reported only after the leader receipt says SUCCESS **and** consensus has reached ACCEPTED, and only after
-  the reloaded state shows the change; otherwise "confirmation delayed" with a Check again button that re-reads state.
-- Every revert predictable from state disables the button with the contract's own sentence; the reveal button checks the
-  commitment locally first, so a wrong salt is caught before signing.
-- GEN amounts are parsed and shown with bigint only; no wei value passes through a JS number.
-- Contract text is rendered as React text; no raw HTML. Local storage holds the game list, the keeper's own secret and
-  salt, and which games this wallet guessed in — nothing else.
-
-## Remaining limits
-
-See "Honest limitation" in the README.
+**Release gate:** before claiming real-money safety, establish recipient-side outgoing
+transfer evidence and a chain-supported delivery/failure proof or atomic escrow on a
+network that actually supports it. This gate remains open in this Studio version.

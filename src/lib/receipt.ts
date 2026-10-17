@@ -100,11 +100,10 @@ export function classifyTransaction(tx: any): ReceiptVerdict {
     if (FAILED_STATUSES.has(status)) {
       return { kind: "error", status, reason: `Consensus ended as ${status}; the change was not applied.` };
     }
-    // No status field at all: fall back to the leader receipt; the postcondition still guards it.
-    if (status !== "" && !APPLIED_STATUSES.has(status)) return { kind: "pending", status };
+    if (!APPLIED_STATUSES.has(status)) return { kind: "pending", status };
     return { kind: "success", status };
   }
-  if (result === "ERROR" || result === "FINISHED_WITH_ERROR") {
+  if ((result === "ERROR" || result === "FINISHED_WITH_ERROR") && status === "FINALIZED") {
     return { kind: "error", status, reason: revertReasonFrom(leader) ?? "Contract execution rolled back." };
   }
   if (FAILED_STATUSES.has(status)) {

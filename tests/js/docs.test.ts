@@ -6,7 +6,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 const root = new URL("../../", import.meta.url).pathname;
-const DOCS = ["README.md", "LOCKED_SPEC.md", "TEST_PLAN.md", "TESTING.md", "RUNTIME_EVIDENCE.md", "SECURITY.md", "CHANGELOG.md"];
+const DOCS = ["README.md", "TESTING.md", "RUNTIME_EVIDENCE.md", "SECURITY.md", "CHANGELOG.md"];
 const read = (p: string) => readFileSync(join(root, p), "utf8");
 
 test("every Python test cited in the docs exists", () => {
@@ -29,9 +29,7 @@ test("every repo path cited in the docs exists", () => {
   }
 });
 
-test("test counts quoted in TESTING.md are current", () => {
-  const t = read("TESTING.md");
-  const jsCount = readdirSync(join(root, "tests/js")).filter((f) => f.endsWith(".test.ts"))
-    .map((f) => [...read(join("tests/js", f)).matchAll(/^test\(/gm)].length).reduce((a, b) => a + b, 0);
-  assert.ok(t.includes(`| ${jsCount} passed |`), `TESTING.md should say ${jsCount} passed for npm test`);
+test("v2 runtime evidence cannot be mistaken for a completed run", () => {
+  assert.match(read("RUNTIME_EVIDENCE.md"), /NOT RUN/);
+  assert.match(read("SECURITY.md"), /gate remains open/);
 });

@@ -85,7 +85,7 @@ export async function ensureStudioNet(): Promise<void> {
 }
 
 async function view(functionName: string, args: unknown[]): Promise<string> {
-  const raw = await readClient().readContract({ address: requireAddress(), functionName, args });
+  const raw = await readClient().readContract({ address: requireAddress(), functionName, args, transactionHashVariant: "latest-nonfinal" });
   return typeof raw === "string" ? raw : JSON.stringify(raw ?? "");
 }
 
@@ -101,9 +101,12 @@ export async function getLimits(): Promise<Limits | null> {
   return parseLimits(await view("get_limits", []));
 }
 
-/** open_game is the only payable write; every other write sends value 0. */
+/** Only open_game and the explicit sponsor-funded replacement accept value. */
 export async function sendWrite(account: string, functionName: string, args: unknown[], value: bigint = 0n): Promise<string> {
   await ensureStudioNet();
+  if (await connectedWallet() !== account.toLowerCase()) throw new Error("Wallet changed. Refresh and review the action again.");
+  const limits = await getLimits();
+  if (limits?.contract_name !== "HonestKeeper" || limits.version !== "2.0.0") throw new Error("Expected HonestKeeper v2.0.0. Configure the new deployment first.");
   const client: any = createClient({
     chain: proxiedChain(),
     account: account as `0x${string}`,

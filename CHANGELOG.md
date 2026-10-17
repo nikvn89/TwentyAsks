@@ -1,13 +1,13 @@
-# Changelog
+# v2.0.0 — steward-feedback revision
 
-## 1.0.0 — 2026-10-06
+Breaking changes require a new deployment and fresh runtime evidence.
 
-- Contract `HonestKeeper` (frozen, SHA-256 `3d305aa9…afae009ea`) deployed for this Project at
-  `0x04A003704FDFAdE01D79213ab78B8D3c4c6CC0A2` (StudioNet). The Intelligent Contract submission is a separate deployment
-  of the same source.
-- App: overview; game rooms with the log, YES/NO replies, whose turn it is and the reveal deadline in days, then STANDS /
-  PLAINLY FALSE marks with the GEN each paid; an open form that generates the salt and shows the commitment and game id
-  before signing; credits with withdraw; a verification page reading `get_limits`.
-- Run through the app on StudioNet (11 transactions, `RUNTIME_EVIDENCE.md`): the reveal listed only the plainly false
-  reply; 0.002 GEN to the misled player, 0.008 GEN to the keeper; both withdrew.
-- Tests: 74 Direct Mode contract tests, 28/28 mutants, frontend tests, calldata table and RPC probe, source hash; CI.
+- open_game adds a designated player; join_game requires consent. Removed wallet-count forfeiture splitting.
+- One-hour participation window; exact 72-hour reveal deadline from join. Expired invitations can be cancelled.
+- reveal publishes the secret separately from judge. Strict VALID/INCONCLUSIVE result, independent validator comparison, 3 recorded attempts and 24-hour recovery deadline.
+- Explicit UNRESOLVED 50/50 fallback; never labels an unusable audit clean.
+- Corrected public-guess disclosure throughout UI/docs.
+- Durable withdrawal requests, no credit-zero delivery claim, recipient attestation, fully funded optional compensation. Trustless failed-payment recovery remains unavailable on Studio.
+- Frontend checks v2 ABI, wallet changes, encoded calldata, pending transaction persistence and postconditions; scoped room/secret storage.
+- Replaced incompatible v1 scenario tests with v2 regression cases; retained hashing, encoding and payment-format tests. Removed obsolete v1 mutation counts and semantic-gate report from current acceptance claims.
+- Archived v1 evidence explicitly as historical. No v2 chain hashes or results fabricated.

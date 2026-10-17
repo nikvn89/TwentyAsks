@@ -24,7 +24,7 @@ test("leader SUCCESS while consensus is still running is pending, not success", 
 });
 
 test("validator receipt listed first does not count; leader is found by mode", () => {
-  const tx = { consensus_data: { leader_receipt: [
+  const tx = { status:"FINALIZED", consensus_data: { leader_receipt: [
     { mode: "validator", execution_result: "SUCCESS" },
     { mode: "leader", execution_result: "ERROR", result: b64("UserError: Only the keeper may answer") },
   ] } };
@@ -58,3 +58,8 @@ test("errorMessage walks every nested cause", () => {
   assert.equal(errorMessage({ code: 4001, message: "User rejected the request." }), "The wallet request was rejected.");
   assert.match(errorMessage(new Error("RLP string ends with 12 superfluous bytes")), /255 bytes/);
 });
+
+ test("missing status and provisional rollback never establish completion", () => {
+   assert.equal(classifyTransaction({consensus_data:{leader_receipt:{mode:"leader",execution_result:"SUCCESS"}}}).kind,"pending");
+   assert.equal(classifyTransaction({status:"PROPOSING",consensus_data:{leader_receipt:{mode:"leader",execution_result:"ERROR"}}}).kind,"pending");
+ });

@@ -1,4 +1,4 @@
-// A get_game view as the contract returns it (the on-chain Intelligent Contract game after the reveal).
+// Synthetic v2 fixtures, not live-chain evidence.
 import type { Game } from "../../src/lib/types.ts";
 
 export const A = "0x6276095faea15108740445ff277fda8c304657f4";
@@ -10,7 +10,7 @@ export const SALT = "k3Rv8pQz1Lw6Tn0Yh5Xc2Bm9Df4Gs7Ja";
 
 export function asking(over: Partial<Game> = {}): Game {
   return {
-    game_id: G, keeper: A, commitment: COMMITMENT, bond_wei: "1000000000000000000", state: "ASKING",
+    game_id: G, keeper: A, player: B, now: 1000, join_deadline: 86400, play_deadline: 4600, reveal_deadline: 260200, audit_deadline: 90000, audit_attempts: 0, audits: [], player_credit_wei: "0", commitment: COMMITMENT, bond_wei: "1000000000000000000", state: "ASKING",
     q_count: 0, questions_left: 20, pending: false, opened_day: 20732, reveal_deadline_day: 20735, today: 20732,
     deadline_passed: false, secret: "", lies: null, lie_share_wei: "200000000000000000", keeper_credit_wei: "0",
     winner: "", guess_count: 0, guesses: [], questions: [], ...over,

@@ -35,7 +35,7 @@ function text(e) {
   return out.join(" | ");
 }
 
-const EXPECTED = ["Unknown game id", "The bond is out of range", "Nothing to withdraw"];
+const EXPECTED = ["Unknown game id", "The bond is out of range", "Nothing to withdraw", "Choose a separate nonzero player wallet", "Unknown pending withdrawal"];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const SPACING_MS = 2500;
 const RATE_WAIT_MS = 65_000;

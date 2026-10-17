@@ -1,1 +1,1 @@
-3d305aa934825304c32905452d806c9ba22cbb8d470e3fed491ff25afae009ea  contracts/HonestKeeper.py
+06189c50d9adb5c15692389b3da8e8dac08b23665fa160578e1deae795faa22a  contracts/HonestKeeper.py

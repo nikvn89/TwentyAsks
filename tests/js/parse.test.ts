@@ -8,7 +8,7 @@ const RAW = JSON.stringify(revealed());
 test("views are parsed as JSON once, or twice when the RPC double-encodes them", () => {
   assert.deepEqual(parseGame(RAW)?.lies, [2]);
   assert.equal(parseGame(JSON.stringify(RAW))?.questions[1].paid_wei, "200000000000000000");
-  assert.equal(parseCredits('{"wallet": "0xa", "credit_wei": "800000000000000000"}')?.credit_wei, "800000000000000000");
+  assert.equal(parseCredits('{"wallet": "0xa", "credit_wei": "800000000000000000", "pending_sequence":0, "last_withdrawal":null}')?.credit_wei, "800000000000000000");
   assert.equal(parseLimits('{"rubric_hash": "ab", "reveal_days": 3}')?.reveal_days, 3);
 });
 
