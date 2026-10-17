@@ -2,18 +2,18 @@
 
 ## Local results
 
-Results measured on 2026-10-16, Python 3.12 and Node 24. Real SDK v0.2.16 in GenLayer
+Original contract results measured on 2026-10-16; frontend/build/source checks repeated on 2026-10-17. Python 3.12 and Node 24. Real SDK v0.2.16 in GenLayer
 Direct Mode, mocked model output and captured (not executed) EthSend requests.
 
 | Check | Result |
 |---|---|
 | Contract regression and commitment vectors | 43 passed |
-| Frontend/unit checks | 58 passed |
+| Frontend/unit checks | 64 passed (2026-10-17; includes 6 RPC-probe regressions) |
 | TypeScript and production build | Passed |
 | GenVM AST lint | Passed (3 checks) |
 | Source hash and calldata table | Passed |
 | Browser automation | Not run: Chromium unavailable; download failed in this environment |
-| Live v2 / independent validators / recipient delivery | Not run |
+| Live v2 | Main game and two linked credited Send transactions verified; remaining cases below NOT RUN live |
 
 The tests cover invitation consent/expiry, 1-hour and 72-hour exact boundaries,
 blocked early reveal, pending-answer forfeit, unauthorized wallets, question cap,
@@ -63,3 +63,23 @@ node tools/collect-evidence.mjs PARENT_TX_HASH RECIPIENT_ADDRESS outgoing-SEND-h
 Record a recipient balance snapshot before sending as well. The collector performs
 no signing, makes no state changes, and does not turn parent execution into a delivery
 claim. Store observed JSON under docs/evidence after reviewing it for unrevealed secrets.
+
+## Observed v2 run on 2026-10-17
+
+The owner used secret a kettle and a 0.01 GEN bond. Q1 used to boil water / NO
+was the sole penalized answer. Q2 living animal / NO and Q3 beautiful / YES were
+not penalized. One correct public guess was recorded. The readback is REVEALED,
+VALID audit, lies [1], 0.002 GEN player allocation and 0.008 GEN keeper allocation.
+Both withdrawals have separately finalized credited Sends linked to successful
+finalized parents. Full links, source hashes and limits are in RUNTIME_EVIDENCE.md.
+
+Do not mark all live cases above PASS: early-reveal and outsider observations were
+UI-only; exact pre-withdrawal balance deltas were not captured; the 72-hour,
+malformed/provider, injection, inconclusive-recovery and failed-delivery cases remain
+NOT RUN live. Native transfer failure recovery remains an OPEN limitation.
+
+The RPC probe now validates the expected tagged user error in a matching leader
+receipt; a bare execution failed is INCONCLUSIVE. Probe decoding is transport evidence,
+not semantic or on-chain authorization coverage.
+
+The strict RPC calldata probe was rerun against the v2 Project deployment on 2026-10-17: all hard-block rows decoded to the expected contract rollback. No write transaction or model audit was sent by this probe.

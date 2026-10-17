@@ -6,9 +6,19 @@ questions, and can submit one public guess. After reveal, independent validators
 audit the answers. The model selects evidence positions; deterministic code alone
 selects recipients and amounts.
 
-**Release status: local regression tests pass; this version is not deployed or
-live-validated.** The v1 addresses must not be configured for this v2 ABI. See
-`TESTING.md` for the remaining live acceptance cases and the withdrawal limitation.
+**Release status: v2 main flow exercised on StudioNet; additional live acceptance cases remain pending.**
+
+- Live app: https://twenty-asks.vercel.app
+- Project contract: [0x5BC1C92F9895e05c443163545c284770Da7015a6](https://explorer-studio.genlayer.com/address/0x5BC1C92F9895e05c443163545c284770Da7015a6)
+- Source checked at commit `5e340b19c672221ca55ee2299c729d4259bea1a2`. The deployed code has the same content
+  after canonicalizing the terminal newline; both raw and canonical hashes are recorded
+  in `deployments.json` and `RUNTIME_EVIDENCE.md`.
+- Observed game: three answers, VALID audit with lies [1], correct guess, allocations
+  of 0.002 GEN to the player and 0.008 GEN to the keeper; both withdrawals have
+  successful finalized parents and separately finalized credited Send transactions.
+
+See `RUNTIME_EVIDENCE.md` for exact links and `TESTING.md` for the cases not run.
+**Trustless automatic recovery of a failed native transfer remains an open limitation.**
 
 ## Rules both wallets accept
 
@@ -41,8 +51,9 @@ npm run dev
 
 Deploy `contracts/HonestKeeper.py` as a **new instance**, with no constructor args.
 Do not upgrade the v1 instance: storage and method signatures changed. Read get_limits
-and confirm version 2.0.0. Set VITE_CONTRACT_ADDRESS in Vercel environment variables,
-then redeploy. The frontend refuses writes to an absent or non-v2 contract. This
+and confirm version 2.0.0. This package sets the Project address in src/lib/config.ts;
+VITE_CONTRACT_ADDRESS is an optional override. If Vercel has an older override,
+update it; otherwise no environment variable is required. Redeploy after committing. The frontend refuses writes to an absent or non-v2 contract. This
 address is public configuration, never a private key. Keep Project and IC submission
 addresses separate if required by the submission rules.
 

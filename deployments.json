@@ -6,5 +6,8 @@
   "source_sha256": "06189c50d9adb5c15692389b3da8e8dac08b23665fa160578e1deae795faa22a",
   "intelligent_contract": "",
   "project": "0x5BC1C92F9895e05c443163545c284770Da7015a6",
-  "runtime_status": "NOT_RUN"
+  "runtime_status": "MAIN_FLOW_VERIFIED_OTHER_LIVE_CASES_PENDING",
+  "tested_source_commit": "5e340b19c672221ca55ee2299c729d4259bea1a2",
+  "source_normalization": "LF line endings and exactly one terminal newline; deployed source lacks final newline",
+  "deployed_raw_sha256": "5098d899d2198bf94cb457318750dec21b552928bf5deb1bf142ab4e6bb40074"
 }
