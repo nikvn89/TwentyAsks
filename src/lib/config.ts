@@ -1,5 +1,5 @@
 // v2 requires a NEW deployment; never reuse the v1 address.
-export const PROJECT_DEPLOYMENT = "";
+export const PROJECT_DEPLOYMENT = "0x5BC1C92F9895e05c443163545c284770Da7015a6";
 export const CONTRACT_ADDRESS = (String(import.meta.env.VITE_CONTRACT_ADDRESS ?? "").trim() || PROJECT_DEPLOYMENT) as `0x${string}` | "";
 
 // Same-origin proxy declared in BOTH vite.config.ts and vercel.json.
